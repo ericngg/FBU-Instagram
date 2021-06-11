@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ivMore"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/ivPostProfile"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Eric" />
+
+    <ImageView
+        android:id="@+id/ivImage"
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+
+        android:layout_below="@+id/ivPostProfile"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvName"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvLikes"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="88dp"
+        tools:layout_editor_absoluteY="320dp"
+        tools:text="THIS IS A DESCRIPTION" />
+
+    <ImageView
+        android:id="@+id/ivPostProfile"
+        android:layout_width="50dp"
+        android:layout_height="50dp
+"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        app:srcCompat="@mipmap/pfp_round" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        app:srcCompat="@mipmap/ufimore_foreground" />
+
+    <ImageButton
+        android:id="@+id/ibLike"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/ivImage"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="5dp"
+        android:adjustViewBounds="true"
+        android:background="@color/white"
+        android:scaleType="centerInside"
+        app:srcCompat="@mipmap/ufiheart_foreground" />
+
+    <ImageButton
+        android:id="@+id/ibComment"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/ivImage"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/ibLike"
+        android:adjustViewBounds="true"
+        android:background="@color/white"
+        android:scaleType="centerInside"
+        app:srcCompat="@mipmap/uficomment_foreground" />
+
+    <ImageButton
+        android:id="@+id/ibShare"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/ivImage"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="2dp"
+        android:layout_toEndOf="@+id/ibComment"
+        android:adjustViewBounds="true"
+        android:background="@color/white"
+        android:scaleType="centerInside"
+        app:srcCompat="@mipmap/ufishare_foreground" />
+
+    <ImageButton
+        android:id="@+id/ibSave"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/ivImage"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="0dp"
+        android:adjustViewBounds="true"
+        android:background="@color/white"
+        android:scaleType="centerInside"
+        app:srcCompat="@mipmap/ufisave_foreground" />
+
+    <TextView
+        android:id="@+id/tvLikes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ibComment"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:text="0 Likes"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="0 Likes" />
+
+</RelativeLayout>
