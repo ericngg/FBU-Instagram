@@ -58,8 +58,16 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="5dp"
-        android:minLines="5"
+        android:minLines="3"
         android:textColor="@color/black"
         android:textSize="20sp"
         tools:text="THIS IS DESCRIPTION!" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvComments"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tvDetailDescription"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp" />
 </RelativeLayout>
