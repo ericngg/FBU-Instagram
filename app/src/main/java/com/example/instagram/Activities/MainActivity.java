@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.instagram.Fragments.ComposeFragment;
 import com.example.instagram.Fragments.HomeFragment;
+import com.example.instagram.Fragments.ProfileFragment;
 import com.example.instagram.Post;
 import com.example.instagram.R;
 import com.example.instagram.databinding.ActivityMainBinding;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
     FragmentManager fragmentManager;
+    MenuItem miActionProgressItem;
 
     private Handler handler = new Handler();
 
@@ -70,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new ComposeFragment();
                         break;
                     case R.id.action_profile:
-                        fragment = new ComposeFragment();
+                        fragment = new ProfileFragment();
                         break;
                     default:
                         fragment = new HomeFragment();
@@ -82,6 +84,32 @@ public class MainActivity extends AppCompatActivity {
         });
 
         binding.bottomNavigation.setSelectedItemId(R.id.action_home);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        final MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // Store instance of the menu item containing progress
+        miActionProgressItem = menu.findItem(R.id.miActionProgress);
+
+        // Return to finish
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    public void showProgressBar() {
+        // Show progress item
+        miActionProgressItem.setVisible(true);
+    }
+
+    public void hideProgressBar() {
+        // Hide progress item
+        miActionProgressItem.setVisible(false);
     }
 
     public void goHome() {

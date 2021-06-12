@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Parcelable;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 
 import com.example.instagram.Activities.MainActivity;
 import com.example.instagram.Activities.PostDetailActivity;
+import com.example.instagram.EndlessRecyclerViewScrollListener;
 import com.example.instagram.Post;
 import com.example.instagram.R;
 import com.example.instagram.databinding.ActivityMainBinding;
@@ -27,31 +29,22 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
 
     FragmentHomeBinding binding;
     public static final String TAG = "HomeFragment";
-    public static final int POST_LIMIT = 20;
-    public static final int COMPOSE_CODE = 46;
+    public static final int POST_LIMIT = 5;
+    private EndlessRecyclerViewScrollListener scrollListener;
 
     protected postAdapter adapter;
     protected List<Post> allPosts;
 
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        //args.putString(ARG_PARAM1, param1);
-        //args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -68,9 +61,8 @@ public class HomeFragment extends Fragment {
         init();
     }
 
-    public void init() {
+    private void init() {
         allPosts = new ArrayList<>();
-
         binding.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -86,8 +78,41 @@ public class HomeFragment extends Fragment {
 
         adapter = new postAdapter(getContext(), allPosts);
         binding.rvPosts.setAdapter(adapter);
-        binding.rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        binding.rvPosts.setLayoutManager(linearLayoutManager);
         queryPosts();
+
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Date createdAt = allPosts.get(allPosts.size() - 1).getCreatedAt();
+                loadNextData(createdAt);
+            }
+        };
+
+        binding.rvPosts.addOnScrollListener(scrollListener);
+    }
+
+    public void loadNextData(Date createdAt) {
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.include(Post.KEY_USER);
+        query.setLimit(POST_LIMIT);
+        query.addDescendingOrder(Post.KEY_CREATED_AT);
+
+        query.whereLessThan("createdAt", createdAt);
+
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting posts", e);
+                    return;
+                }
+
+                allPosts.addAll(posts);
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     public void fetchTimelineAsync(int page) {

@@ -41,25 +41,13 @@ public class ComposeFragment extends Fragment {
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
     private String photoFileName = "photo.jpg";
     File photoFile;
+    private MainActivity mainActivity;
 
     private FragmentComposeBinding binding;
-
-    public static ComposeFragment newInstance(String param1, String param2) {
-        ComposeFragment fragment = new ComposeFragment();
-        Bundle args = new Bundle();
-        //args.putString(ARG_PARAM1, param1);
-        //args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            //mParam1 = getArguments().getString(ARG_PARAM1);
-            //mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -72,6 +60,8 @@ public class ComposeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mainActivity = (MainActivity) getActivity();
 
         binding.btnPicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,6 +153,7 @@ public class ComposeFragment extends Fragment {
     }
 
     public Post savePost(String description, ParseUser currentUser, File photoFile) {
+        mainActivity.showProgressBar();
         Post post = new Post();
         post.setDescription(description);
         post.setImage(new ParseFile(photoFile));
@@ -176,8 +167,8 @@ public class ComposeFragment extends Fragment {
                 Log.i(TAG, "Post save was successful");
 
                 binding.etDescription.setText("");
-                ((MainActivity) getActivity()).goHome();
-
+                mainActivity.goHome();
+                mainActivity.hideProgressBar();
             }
         });
 
