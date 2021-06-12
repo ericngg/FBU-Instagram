@@ -3,6 +3,8 @@ package com.example.instagram.Activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -19,10 +21,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.instagram.Fragments.ComposeFragment;
+import com.example.instagram.Fragments.HomeFragment;
 import com.example.instagram.Post;
 import com.example.instagram.R;
 import com.example.instagram.databinding.ActivityMainBinding;
 import com.example.instagram.postAdapter;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -33,15 +39,10 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements postAdapter.ViewHolder.onPostListener {
+public class MainActivity extends AppCompatActivity {
 
-    public static final String TAG = "MainActivity";
-    public static final int POST_LIMIT = 20;
-    public static final int COMPOSE_CODE = 46;
     ActivityMainBinding binding;
-
-    protected postAdapter adapter;
-    protected List<Post> allPosts;
+    FragmentManager fragmentManager;
 
     private Handler handler = new Handler();
 
@@ -52,26 +53,37 @@ public class MainActivity extends AppCompatActivity implements postAdapter.ViewH
         super.onCreate(savedInstanceState);
         setContentView(view);
 
-        allPosts = new ArrayList<>();
-        adapter = new postAdapter(this, allPosts, this);
 
-        binding.rvPosts.setAdapter(adapter);
-        binding.rvPosts.setLayoutManager(new LinearLayoutManager(this));
-        queryPosts();
+        fragmentManager = getSupportFragmentManager();
 
-        binding.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        binding.bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onRefresh() {
-                fetchTimelineAsync(0);
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment fragment;
+                switch (item.getItemId()) {
+                    case R.id.action_home:
+                        Toast.makeText(MainActivity.this, "Home!", Toast.LENGTH_SHORT).show();
+                        fragment = new HomeFragment();
+                        break;
+                    case R.id.action_compose:
+                        Toast.makeText(MainActivity.this, "Compose!", Toast.LENGTH_SHORT).show();
+                        fragment = new ComposeFragment();
+                        break;
+                    case R.id.action_profile:
+                    default:
+                        Toast.makeText(MainActivity.this, "Profile!", Toast.LENGTH_SHORT).show();
+                        fragment = new ComposeFragment();
+                        break;
+                }
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                return true;
             }
         });
 
-        // Configure the refreshing colors
-        binding.swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
+        binding.bottomNavigation.setSelectedItemId(R.id.action_home);
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -84,62 +96,8 @@ public class MainActivity extends AppCompatActivity implements postAdapter.ViewH
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.compose) {
             Intent intent = new Intent(MainActivity.this, ComposeActivity.class);
-            startActivityForResult(intent, COMPOSE_CODE);
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == COMPOSE_CODE) {
-            if (resultCode == RESULT_OK) {
-                handler.postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        allPosts.clear();
-                        queryPosts();
-                    }
-                }, 5000);
-            } else { // Result was a failure
-                Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    public void fetchTimelineAsync(int page) {
-        adapter.clear();
-        queryPosts();
-        binding.swipeContainer.setRefreshing(false);
-    }
-
-    private void queryPosts() {
-        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-        query.include(Post.KEY_USER);
-        query.setLimit(POST_LIMIT);
-        query.addDescendingOrder(Post.KEY_CREATED_AT);
-        query.findInBackground(new FindCallback<Post>() {
-            @Override
-            public void done(List<Post> posts, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting posts", e);
-                    return;
-                }
-
-                allPosts.addAll(posts);
-                adapter.notifyDataSetChanged();
-            }
-        });
-    }
-
-    @Override
-    public void onPostClick(int position) {
-        Post post = allPosts.get(position);
-
-        Intent intent = new Intent(MainActivity.this, PostDetailActivity.class);
-        intent.putExtra("post", (Parcelable) post);
-        startActivity(intent);
     }
 }

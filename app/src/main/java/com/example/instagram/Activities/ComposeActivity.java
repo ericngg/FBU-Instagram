@@ -144,5 +144,4 @@ public class ComposeActivity extends AppCompatActivity {
 
         return post;
     }
-
 }

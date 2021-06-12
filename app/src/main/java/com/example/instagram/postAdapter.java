@@ -1,37 +1,52 @@
 package com.example.instagram;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.instagram.Activities.PostDetailActivity;
 import com.parse.ParseFile;
+
+import org.parceler.Parcel;
 
 import java.util.List;
 
 public class postAdapter extends RecyclerView.Adapter<postAdapter.ViewHolder> {
     private static Context context;
     private List<Post> posts;
-    ViewHolder.onPostListener onPostListener;
 
 
-    public postAdapter(Context context, List<Post> posts, ViewHolder.onPostListener onPostListener) {
+    public postAdapter(Context context, List<Post> posts) {
         this.context = context;
         this.posts = posts;
-        this.onPostListener = onPostListener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_post, parent, false);
-        return new ViewHolder(view, onPostListener);
+        ViewHolder vh = new ViewHolder(view);
+        vh.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, PostDetailActivity.class);
+                Post post = posts.get(vh.getAdapterPosition());
+                intent.putExtra("post", (Parcelable) post);
+                context.startActivity(intent);
+            }
+        });
+
+        return vh;
     }
 
     @Override
@@ -57,21 +72,16 @@ public class postAdapter extends RecyclerView.Adapter<postAdapter.ViewHolder> {
         return posts.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tvName;
         private ImageView ivImage;
         private TextView tvDescription;
 
-        onPostListener onPostListener;
-
-        public ViewHolder(@NonNull View itemView, onPostListener onPostListener) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvName);
             ivImage = itemView.findViewById(R.id.ivImage);
             tvDescription = itemView.findViewById(R.id.tvDescription);
-            this.onPostListener = onPostListener;
-
-            itemView.setOnClickListener(this);
         }
 
         public void bind(Post post) {
@@ -81,15 +91,6 @@ public class postAdapter extends RecyclerView.Adapter<postAdapter.ViewHolder> {
             if (image != null) {
                 Glide.with(context).load(image.getUrl()).into(ivImage);
             }
-        }
-
-        @Override
-        public void onClick(View v) {
-            onPostListener.onPostClick(getAdapterPosition());
-        }
-
-        public interface onPostListener {
-            void onPostClick(int position);
         }
     }
 }

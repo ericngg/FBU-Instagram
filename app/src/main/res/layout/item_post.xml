@@ -66,8 +66,8 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="0dp"
@@ -76,12 +76,12 @@
 
     <ImageButton
         android:id="@+id/ibLike"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_below="@+id/ivImage"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="0dp"
         android:adjustViewBounds="true"
         android:background="@color/white"
         android:scaleType="centerInside"
@@ -89,11 +89,11 @@
 
     <ImageButton
         android:id="@+id/ibComment"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_below="@+id/ivImage"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/ibLike"
         android:adjustViewBounds="true"
         android:background="@color/white"
@@ -102,11 +102,11 @@
 
     <ImageButton
         android:id="@+id/ibShare"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_below="@+id/ivImage"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/ibComment"
         android:adjustViewBounds="true"
         android:background="@color/white"
@@ -115,11 +115,11 @@
 
     <ImageButton
         android:id="@+id/ibSave"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_below="@+id/ivImage"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="0dp"
         android:layout_marginEnd="0dp"
         android:adjustViewBounds="true"
         android:background="@color/white"
@@ -132,7 +132,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ibComment"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="5dp"
         android:text="0 Likes"
         android:textColor="@color/black"

@@ -38,9 +38,6 @@ public class PostDetailActivity extends AppCompatActivity {
         binding.tvDetailDescription.setText(post.getDescription());
 
         binding.tvCreatedAt.setText(getRelativeTimeAgo(post.getCreatedAt().toString()));
-
-
-
     }
 
     public String getRelativeTimeAgo(String rawJsonDate) {
