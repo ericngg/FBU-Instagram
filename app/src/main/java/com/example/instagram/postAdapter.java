@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.instagram.Activities.PostDetailActivity;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import org.parceler.Parcel;
 
@@ -28,6 +32,8 @@ import java.util.Locale;
 public class postAdapter extends RecyclerView.Adapter<postAdapter.ViewHolder> {
     private static Context context;
     private List<Post> posts;
+
+    public static final String TAG = "postAdapter";
 
 
     public postAdapter(Context context, List<Post> posts) {
@@ -81,6 +87,13 @@ public class postAdapter extends RecyclerView.Adapter<postAdapter.ViewHolder> {
         private ImageView ivImage;
         private TextView tvDescription;
         private TextView tvCreatedAt;
+        private TextView tvLikes;
+
+        private ImageButton ibLike;
+        private ImageButton ibComment;
+
+        private int likesCount;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -88,16 +101,72 @@ public class postAdapter extends RecyclerView.Adapter<postAdapter.ViewHolder> {
             ivImage = itemView.findViewById(R.id.ivImage);
             tvDescription = itemView.findViewById(R.id.tvDescription);
             tvCreatedAt = itemView.findViewById(R.id.tvCreatedAt);
+            tvLikes = itemView.findViewById(R.id.tvLikes);
+
+            ibLike = itemView.findViewById(R.id.ibLike);
+            ibComment = itemView.findViewById(R.id.ibComment);
         }
 
         public void bind(Post post) {
             tvDescription.setText(post.getDescription());
             tvName.setText(post.getUser().getUsername());
             tvCreatedAt.setText(getRelativeTimeAgo(post.getCreatedAt().toString()));
+            likesCount = post.getLikes();
+            tvLikes.setText(likesCount + " Likes");
             ParseFile image = post.getImage();
             if (image != null) {
                 Glide.with(context).load(image.getUrl()).into(ivImage);
             }
+
+            if (post.getLiked()) {
+                ibLike.setImageResource(R.mipmap.ufiheart_active_foreground);
+                ibLike.setTag(R.mipmap.ufiheart_active_foreground);
+            } else {
+                ibLike.setImageResource(R.mipmap.ufiheart_foreground);
+                ibLike.setTag(R.mipmap.ufiheart_foreground);
+            }
+
+            ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+
+            ibLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    query.getInBackground(post.getObjectId(), (object, e) -> {
+                        if (e == null) {
+                            if ((int) ibLike.getTag() == R.mipmap.ufiheart_foreground) {
+                                // Like
+                                likesCount++;
+                                object.put("likesCount", likesCount);
+                                object.put("liked", true);
+                                ibLike.setImageResource(R.mipmap.ufiheart_active_foreground);
+                                ibLike.setTag(R.mipmap.ufiheart_active_foreground);
+                            } else {
+                                // Unlike
+                                likesCount--;
+                                object.put("likesCount", likesCount);
+                                object.put("liked", false);
+                                ibLike.setImageResource(R.mipmap.ufiheart_foreground);
+                                ibLike.setTag(R.mipmap.ufiheart_foreground);
+                            }
+
+                            // All other fields will remain the same
+                            object.saveInBackground();
+                            tvLikes.setText(likesCount + " Likes");
+
+                        } else {
+                            // something went wrong
+                            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
+
+            ibComment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Open comments Activity with a recyclerview of the comments
+                }
+            });
         }
 
         public String getRelativeTimeAgo(String rawJsonDate) {
