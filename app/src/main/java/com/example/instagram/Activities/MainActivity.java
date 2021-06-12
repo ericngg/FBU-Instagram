@@ -116,4 +116,9 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager.beginTransaction().replace(R.id.flContainer, new HomeFragment()).commit();
         binding.bottomNavigation.setSelectedItemId(R.id.action_home);
     }
+
+    public void goProfile() {
+        fragmentManager.beginTransaction().replace(R.id.flContainer, new ProfileFragment()).commit();
+        binding.bottomNavigation.setSelectedItemId(R.id.action_profile);
+    }
 }

@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.instagram.Activities.MainActivity;
 import com.example.instagram.Activities.PostDetailActivity;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -32,13 +33,15 @@ import java.util.Locale;
 public class postAdapter extends RecyclerView.Adapter<postAdapter.ViewHolder> {
     private static Context context;
     private List<Post> posts;
+    private MainActivity mainActivity;
 
     public static final String TAG = "postAdapter";
 
 
-    public postAdapter(Context context, List<Post> posts) {
+    public postAdapter(Context context, List<Post> posts, MainActivity mainActivity) {
         this.context = context;
         this.posts = posts;
+        this.mainActivity = mainActivity;
     }
 
     @NonNull
@@ -62,7 +65,7 @@ public class postAdapter extends RecyclerView.Adapter<postAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Post post = posts.get(position);
-        holder.bind(post);
+        holder.bind(post, mainActivity);
     }
 
     // Clean all elements of the recycler
@@ -88,6 +91,7 @@ public class postAdapter extends RecyclerView.Adapter<postAdapter.ViewHolder> {
         private TextView tvDescription;
         private TextView tvCreatedAt;
         private TextView tvLikes;
+        private ImageView ivPostProfile;
 
         private ImageButton ibLike;
         private ImageButton ibComment;
@@ -102,12 +106,13 @@ public class postAdapter extends RecyclerView.Adapter<postAdapter.ViewHolder> {
             tvDescription = itemView.findViewById(R.id.tvDescription);
             tvCreatedAt = itemView.findViewById(R.id.tvCreatedAt);
             tvLikes = itemView.findViewById(R.id.tvLikes);
+            ivPostProfile = itemView.findViewById(R.id.ivPostProfile);
 
             ibLike = itemView.findViewById(R.id.ibLike);
             ibComment = itemView.findViewById(R.id.ibComment);
         }
 
-        public void bind(Post post) {
+        public void bind(Post post, MainActivity mainActivity) {
             tvDescription.setText(post.getDescription());
             tvName.setText(post.getUser().getUsername());
             tvCreatedAt.setText(getRelativeTimeAgo(post.getCreatedAt().toString()));
@@ -165,6 +170,20 @@ public class postAdapter extends RecyclerView.Adapter<postAdapter.ViewHolder> {
                 @Override
                 public void onClick(View v) {
                     // Open comments Activity with a recyclerview of the comments
+                }
+            });
+
+            ivPostProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mainActivity.goProfile();
+                }
+            });
+
+            tvName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mainActivity.goProfile();
                 }
             });
         }

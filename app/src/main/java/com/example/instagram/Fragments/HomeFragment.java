@@ -76,7 +76,7 @@ public class HomeFragment extends Fragment {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-        adapter = new postAdapter(getContext(), allPosts);
+        adapter = new postAdapter(getContext(), allPosts, (MainActivity) getActivity());
         binding.rvPosts.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         binding.rvPosts.setLayoutManager(linearLayoutManager);
