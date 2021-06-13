@@ -60,6 +60,11 @@ Here's a walkthrough of implemented user stories:
 
 GIF created with [screen2gif](https://www.screentogif.com/).
 
+### Comment
+<img src='https://github.com/ericngg/FBU-Instagram/blob/main/demo5.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+GIF created with [screen2gif](https://www.screentogif.com/).
+
 ## Credits
 
 List an 3rd party libraries, icons, graphics, or other assets you used in your app.
