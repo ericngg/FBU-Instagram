@@ -46,7 +46,13 @@ The following **stretch** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/ericngg/FBU-Instagram/blob/main/demo1.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+<img src='https://github.com/ericngg/FBU-Instagram/blob/main/demo2.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+<img src='https://github.com/ericngg/FBU-Instagram/blob/main/demo3.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+<img src='https://github.com/ericngg/FBU-Instagram/blob/main/demo4.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [screen2gif](https://www.screentogif.com/).
 
