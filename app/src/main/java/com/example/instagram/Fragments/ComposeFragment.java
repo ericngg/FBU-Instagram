@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 
 import android.os.Environment;
@@ -22,11 +21,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.instagram.Activities.ComposeActivity;
 import com.example.instagram.Activities.MainActivity;
-import com.example.instagram.Post;
-import com.example.instagram.R;
-import com.example.instagram.databinding.ActivityMainBinding;
+import com.example.instagram.Models.Post;
 import com.example.instagram.databinding.FragmentComposeBinding;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -87,7 +83,6 @@ public class ComposeFragment extends Fragment {
 
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 savePost(description, currentUser, photoFile);
-                //Log.i("TAG", getActivity().toString());
             }
         });
     }

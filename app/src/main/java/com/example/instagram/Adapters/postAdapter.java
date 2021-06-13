@@ -1,10 +1,9 @@
-package com.example.instagram;
+package com.example.instagram.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,15 +16,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.instagram.Activities.Comment;
 import com.example.instagram.Activities.MainActivity;
 import com.example.instagram.Activities.PostDetailActivity;
-import com.parse.FindCallback;
+import com.example.instagram.Models.Post;
+import com.example.instagram.R;
 import com.parse.ParseFile;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
-
-import org.parceler.Parcel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,6 +33,8 @@ public class postAdapter extends RecyclerView.Adapter<postAdapter.ViewHolder> {
     private List<Post> posts;
     private MainActivity mainActivity;
 
+    public static final int CLICK_TAG = 80;
+    public static final int COMMENT_TAG = 92;
     public static final String TAG = "postAdapter";
 
 
@@ -57,6 +55,7 @@ public class postAdapter extends RecyclerView.Adapter<postAdapter.ViewHolder> {
                 Intent intent = new Intent(context, PostDetailActivity.class);
                 Post post = posts.get(vh.getAdapterPosition());
                 intent.putExtra("post", (Parcelable) post);
+                intent.putExtra("code", CLICK_TAG);
                 context.startActivity(intent);
             }
         });
@@ -172,6 +171,10 @@ public class postAdapter extends RecyclerView.Adapter<postAdapter.ViewHolder> {
                 @Override
                 public void onClick(View v) {
                     // Open comments Activity with a recyclerview of the comments
+                    Intent intent = new Intent(context, PostDetailActivity.class);
+                    intent.putExtra("post", (Parcelable) post);
+                    intent.putExtra("code", COMMENT_TAG);
+                    context.startActivity(intent);
                 }
             });
 

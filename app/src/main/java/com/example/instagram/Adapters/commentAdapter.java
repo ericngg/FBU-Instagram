@@ -1,6 +1,7 @@
-package com.example.instagram;
+package com.example.instagram.Adapters;
 
 import android.content.Context;
+import android.text.Html;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.instagram.Activities.Comment;
+import com.example.instagram.Models.Comment;
+import com.example.instagram.R;
 import com.parse.ParseFile;
 
 import java.text.ParseException;
@@ -48,6 +50,12 @@ public class commentAdapter extends RecyclerView.Adapter<commentAdapter.ViewHold
         return comments.size();
     }
 
+    // Clean all elements of the recycler
+    public void clear() {
+        comments.clear();
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView ivCommentPicture;
         private TextView tvComment;
@@ -61,12 +69,15 @@ public class commentAdapter extends RecyclerView.Adapter<commentAdapter.ViewHold
         }
 
         public void bind(Comment comment) {
+            /*
             ParseFile image = comment.getUser().getParseFile("profilePicture");
             if (image != null) {
                 Glide.with(context).load(image.getUrl()).into(ivCommentPicture);
             }
 
-            tvComment.setText(comment.getComment());
+             */
+            String text = "<b>" + comment.getUser().getUsername() + "</b> " + comment.getComment();
+            tvComment.setText(Html.fromHtml(text));
             tvCommentCreatedAt.setText(getRelativeTimeAgo(comment.getCreatedAt().toString()));
 
         }

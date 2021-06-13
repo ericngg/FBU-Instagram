@@ -14,14 +14,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.instagram.Post;
+import com.example.instagram.Models.Post;
 import com.example.instagram.databinding.ActivityComposeBinding;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
-import org.parceler.Parcels;
 
 import java.io.File;
 

@@ -12,11 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.instagram.Post;
-import com.example.instagram.R;
+import com.example.instagram.Models.Post;
 import com.example.instagram.databinding.FragmentProfileBinding;
-import com.example.instagram.postAdapter;
-import com.example.instagram.postGridAdapter;
+import com.example.instagram.Adapters.postGridAdapter;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;

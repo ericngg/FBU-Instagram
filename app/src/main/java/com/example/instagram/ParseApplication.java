@@ -2,7 +2,8 @@ package com.example.instagram;
 
 import android.app.Application;
 
-import com.example.instagram.Activities.Comment;
+import com.example.instagram.Models.Comment;
+import com.example.instagram.Models.Post;
 import com.parse.Parse;
 import com.parse.ParseObject;
 

@@ -1,6 +1,5 @@
 package com.example.instagram.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,20 +9,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.instagram.Activities.MainActivity;
-import com.example.instagram.Activities.PostDetailActivity;
 import com.example.instagram.EndlessRecyclerViewScrollListener;
-import com.example.instagram.Post;
-import com.example.instagram.R;
-import com.example.instagram.databinding.ActivityMainBinding;
+import com.example.instagram.Models.Post;
 import com.example.instagram.databinding.FragmentHomeBinding;
-import com.example.instagram.postAdapter;
+import com.example.instagram.Adapters.postAdapter;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -138,5 +133,11 @@ public class HomeFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }
