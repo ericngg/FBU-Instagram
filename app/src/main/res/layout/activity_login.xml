@@ -98,7 +98,7 @@
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/tvSignUp"
+        android:id="@+id/btnSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnLogin"

@@ -12,12 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.instagram.Activities.MainActivity;
 import com.example.instagram.Models.Post;
 import com.example.instagram.databinding.FragmentProfileBinding;
 import com.example.instagram.Adapters.postGridAdapter;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +57,15 @@ public class ProfileFragment extends Fragment {
         adapter = new postGridAdapter(getContext(), allPosts);
         binding.rvGridPosts.setAdapter(adapter);
         binding.rvGridPosts.setLayoutManager(new GridLayoutManager(getContext(), 3));
+
+        // Only signs out!
+        binding.btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseUser.logOut();
+                getActivity().finish();
+            }
+        });
 
         // Querying the parse database for post
         queryPosts();
