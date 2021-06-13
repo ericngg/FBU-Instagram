@@ -58,8 +58,6 @@ Here's a walkthrough of implemented user stories:
 ### Profile
 <img src='https://github.com/ericngg/FBU-Instagram/blob/main/demo4.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-GIF created with [screen2gif](https://www.screentogif.com/).
-
 ### Comment
 <img src='https://github.com/ericngg/FBU-Instagram/blob/main/demo5.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
