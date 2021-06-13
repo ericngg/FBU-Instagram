@@ -46,19 +46,21 @@ public class ComposeFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    // Creating the binding here
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentComposeBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
+    // Initialize Variables here
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         mainActivity = (MainActivity) getActivity();
 
+        // Launches the Camera
         binding.btnPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,6 +68,8 @@ public class ComposeFragment extends Fragment {
             }
         });
 
+
+        // Submits the post
         binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,12 +91,7 @@ public class ComposeFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-
+    // Launches the Camera
     private void launchCamera() {
         // create Intent to take a picture and return control to the calling application
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -114,6 +113,7 @@ public class ComposeFragment extends Fragment {
         }
     }
 
+    // Works with the picture after image captured
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -147,6 +147,7 @@ public class ComposeFragment extends Fragment {
 
     }
 
+    // Saves the post to the parse database
     public Post savePost(String description, ParseUser currentUser, File photoFile) {
         mainActivity.showProgressBar();
         Post post = new Post();

@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    // Logs in the user
     private void loginUser(String username, String password) {
         Log.i(TAG, "Attemping to login user " + username);
 
@@ -58,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    // Sends the user to the main
     private void goMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

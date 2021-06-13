@@ -31,9 +31,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(view);
 
-
+        // Fragments
         fragmentManager = getSupportFragmentManager();
 
+        // Bottom Nav
         binding.bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNavigation.setSelectedItemId(R.id.action_home);
     }
 
+    // For the loading spin
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         final MenuInflater inflater = getMenuInflater();
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    // For the loading spin
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // Store instance of the menu item containing progress
@@ -76,21 +79,25 @@ public class MainActivity extends AppCompatActivity {
         return super.onPrepareOptionsMenu(menu);
     }
 
+    // SHows the loading spin
     public void showProgressBar() {
         // Show progress item
         miActionProgressItem.setVisible(true);
     }
 
+    // Hides the loading spin
     public void hideProgressBar() {
         // Hide progress item
         miActionProgressItem.setVisible(false);
     }
 
+    // Used to go back to the home page
     public void goHome() {
         fragmentManager.beginTransaction().replace(R.id.flContainer, new HomeFragment()).commit();
         binding.bottomNavigation.setSelectedItemId(R.id.action_home);
     }
 
+    // Used to go to the profile page
     public void goProfile() {
         fragmentManager.beginTransaction().replace(R.id.flContainer, new ProfileFragment()).commit();
         binding.bottomNavigation.setSelectedItemId(R.id.action_profile);

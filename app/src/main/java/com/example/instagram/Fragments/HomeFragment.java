@@ -42,6 +42,7 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    // Bindings
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
@@ -49,15 +50,19 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    // Initialize
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        init();
+        init(); // needed or everything gets called for soem reason.
     }
 
+    // Initializes everything
     private void init() {
         allPosts = new ArrayList<>();
+
+        // Swipe refresh feature
         binding.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -71,12 +76,16 @@ public class HomeFragment extends Fragment {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
+        // Adapter
         adapter = new postAdapter(getContext(), allPosts, (MainActivity) getActivity());
         binding.rvPosts.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         binding.rvPosts.setLayoutManager(linearLayoutManager);
+
+        // Querying parse database for posts
         queryPosts();
 
+        // Endless scrolling feature
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
@@ -88,6 +97,7 @@ public class HomeFragment extends Fragment {
         binding.rvPosts.addOnScrollListener(scrollListener);
     }
 
+    // For the endless scrolling feature
     public void loadNextData(Date createdAt) {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
@@ -110,12 +120,14 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    // For the swipe refresh feature
     public void fetchTimelineAsync(int page) {
         adapter.clear();
         queryPosts();
         binding.swipeContainer.setRefreshing(false);
     }
 
+    // Querying parse database for posts
     private void queryPosts() {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
@@ -133,11 +145,5 @@ public class HomeFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         });
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
     }
 }

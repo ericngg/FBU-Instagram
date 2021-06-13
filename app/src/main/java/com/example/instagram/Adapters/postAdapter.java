@@ -114,16 +114,20 @@ public class postAdapter extends RecyclerView.Adapter<postAdapter.ViewHolder> {
         }
 
         public void bind(Post post, MainActivity mainActivity) {
+            // Description, name, createdAt, image
             tvDescription.setText(post.getDescription());
             tvName.setText(post.getUser().getUsername());
             tvCreatedAt.setText(getRelativeTimeAgo(post.getCreatedAt().toString()));
-            likesCount = post.getLikes();
-            tvLikes.setText(likesCount + " Likes");
             ParseFile image = post.getImage();
             if (image != null) {
                 Glide.with(context).load(image.getUrl()).into(ivImage);
             }
 
+            // Likes
+            likesCount = post.getLikes();
+            tvLikes.setText(likesCount + " Likes");
+
+            // If the post was already liked, set the like button to active, else not active.
             if (post.getLiked()) {
                 ibLike.setImageResource(R.mipmap.ufiheart_active_foreground);
                 ibLike.setTag(R.mipmap.ufiheart_active_foreground);
@@ -134,6 +138,7 @@ public class postAdapter extends RecyclerView.Adapter<postAdapter.ViewHolder> {
 
             ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
 
+            // Liking functionality
             ibLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -167,6 +172,7 @@ public class postAdapter extends RecyclerView.Adapter<postAdapter.ViewHolder> {
                 }
             });
 
+            // Opens the detail page with focus on the edit text
             ibComment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -178,6 +184,7 @@ public class postAdapter extends RecyclerView.Adapter<postAdapter.ViewHolder> {
                 }
             });
 
+            // Opens the profile page
             ivPostProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -185,6 +192,7 @@ public class postAdapter extends RecyclerView.Adapter<postAdapter.ViewHolder> {
                 }
             });
 
+            // Opens the profile page
             tvName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -193,6 +201,7 @@ public class postAdapter extends RecyclerView.Adapter<postAdapter.ViewHolder> {
             });
         }
 
+        // Converts the createdAt timestamp to a more useable timestamp
         public String getRelativeTimeAgo(String rawJsonDate) {
             String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
             SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);

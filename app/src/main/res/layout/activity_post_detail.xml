@@ -94,9 +94,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="0dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginBottom="0dp"
-        android:backgroundTint="#000000"
+        android:backgroundTint="@color/blue"
         android:text="Send"
         android:textColor="@color/white"
         android:textStyle="bold" />

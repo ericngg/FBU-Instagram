@@ -47,7 +47,7 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        init();
+        init(); // Needed for some reason or all the code gets called
     }
 
     private void init() {
@@ -56,9 +56,11 @@ public class ProfileFragment extends Fragment {
         binding.rvGridPosts.setAdapter(adapter);
         binding.rvGridPosts.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
+        // Querying the parse database for post
         queryPosts();
     }
 
+    // Querying the database for post
     private void queryPosts() {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);

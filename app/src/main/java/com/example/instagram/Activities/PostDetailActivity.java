@@ -55,34 +55,44 @@ public class PostDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(view);
 
+        // Initialize variables
         allComments = new ArrayList<>();
         handler = new Handler();
 
+        // Intent
         Intent intent = getIntent();
         Post post = (Post) intent.getSerializableExtra("post");
         objectId = post.getObjectId();
 
+        // Profile picture
         ParseFile image = post.getUser().getParseFile("profilePicture");
         Glide.with(this).load(image.getUrl()).into(binding.ivDetailProfile);
+
+        // Post picture
         Glide.with(this).load(post.getImage().getUrl()).into(binding.ivDetailPicture);
+
+        // Username, description, number of likes, and createdAt
         binding.tvDetailName.setText(post.getUser().getUsername());
         binding.tvDetailDescription.setText(post.getDescription());
         binding.tvDetailLikes.setText(post.getLikes() + " Likes");
-
         binding.tvCreatedAt.setText(getRelativeTimeAgo(post.getCreatedAt().toString()));
 
+        // adapter
         adapter = new commentAdapter(this, allComments);
         binding.rvComments.setAdapter(adapter);
         binding.rvComments.setLayoutManager(new LinearLayoutManager(this));
 
+        // Queries the parse database for comments
         queryComments();
 
+        // This triggers when the user presses the comments button, rather than clicking on the post (focuses on the edit text)
         if (intent.getIntExtra("code", 80) == COMMENT_TAG) {
             binding.etComment.requestFocus();
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.showSoftInput(binding.etComment, InputMethodManager.SHOW_IMPLICIT);
         }
 
+        // Sends the comment created to the parse database
         binding.btnCommentSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,6 +122,7 @@ public class PostDetailActivity extends AppCompatActivity {
         });
     }
 
+    // For the loading spin
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         final MenuInflater inflater = getMenuInflater();
@@ -119,6 +130,7 @@ public class PostDetailActivity extends AppCompatActivity {
         return true;
     }
 
+    // For the loading spin
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // Store instance of the menu item containing progress
@@ -128,18 +140,20 @@ public class PostDetailActivity extends AppCompatActivity {
         return super.onPrepareOptionsMenu(menu);
     }
 
+    // Shows the loading spin
     public void showProgressBar() {
         // Show progress item
         miActionProgressItem.setVisible(true);
     }
 
+    // Hides the loading spin
     public void hideProgressBar() {
         // Hide progress item
         miActionProgressItem.setVisible(false);
     }
 
+    // Saves the comment to the parse database
     private void saveComment(ParseUser currentUser, String comment) {
-
         ParseObject comm = ParseObject.create("Comments");
         comm.put("postObjectId", objectId);
         comm.put("user", currentUser);
@@ -178,6 +192,7 @@ public class PostDetailActivity extends AppCompatActivity {
          */
     }
 
+    // Converts the createdAt time to a more readable time
     public String getRelativeTimeAgo(String rawJsonDate) {
         String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
         SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
@@ -195,6 +210,7 @@ public class PostDetailActivity extends AppCompatActivity {
         return relativeDate;
     }
 
+    // Queries the parse database for all comments associated with a post
     private void queryComments() {
         ParseQuery<Comment> query = ParseQuery.getQuery(Comment.class);
         query.include(Comment.KEY_USER);

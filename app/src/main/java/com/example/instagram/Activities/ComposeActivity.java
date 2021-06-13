@@ -39,6 +39,7 @@ public class ComposeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(view);
 
+        // Onclick to start the camera
         binding.btnPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,6 +47,7 @@ public class ComposeActivity extends AppCompatActivity {
             }
         });
 
+        // Onclick to submit a post
         binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,6 +71,7 @@ public class ComposeActivity extends AppCompatActivity {
         });
     }
 
+    // Launches the camera
     private void launchCamera() {
         // create Intent to take a picture and return control to the calling application
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -90,6 +93,7 @@ public class ComposeActivity extends AppCompatActivity {
         }
     }
 
+    // Saves the image so we can use it
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -124,6 +128,7 @@ public class ComposeActivity extends AppCompatActivity {
 
     }
 
+    // Saving the post to parse database
     public Post savePost(String description, ParseUser currentUser, File photoFile) {
         Post post = new Post();
         post.setDescription(description);

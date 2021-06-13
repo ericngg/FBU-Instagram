@@ -69,6 +69,10 @@ public class commentAdapter extends RecyclerView.Adapter<commentAdapter.ViewHold
         }
 
         public void bind(Comment comment) {
+            // Note: add this if multiple users. I hardcoded the source picture because it is round
+            // and if you use this code, it grabs a square one from the database. Atm, it is designed
+            // for just me (Eric).
+
             /*
             ParseFile image = comment.getUser().getParseFile("profilePicture");
             if (image != null) {
@@ -76,12 +80,15 @@ public class commentAdapter extends RecyclerView.Adapter<commentAdapter.ViewHold
             }
 
              */
+
+            // Populating comment data
             String text = "<b>" + comment.getUser().getUsername() + "</b> " + comment.getComment();
             tvComment.setText(Html.fromHtml(text));
             tvCommentCreatedAt.setText(getRelativeTimeAgo(comment.getCreatedAt().toString()));
 
         }
 
+        // Converts the createdAt time to a more readable and useable timestamp.
         public String getRelativeTimeAgo(String rawJsonDate) {
             String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
             SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
