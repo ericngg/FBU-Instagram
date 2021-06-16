@@ -3,6 +3,7 @@ package com.example.instagram.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
+import android.text.Html;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -115,7 +116,8 @@ public class postAdapter extends RecyclerView.Adapter<postAdapter.ViewHolder> {
 
         public void bind(Post post, MainActivity mainActivity) {
             // Description, name, createdAt, image
-            tvDescription.setText(post.getDescription());
+            String desc = "<b>" + post.getUser().getUsername() + "</b> " + post.getDescription();
+            tvDescription.setText(Html.fromHtml(desc));
             tvName.setText(post.getUser().getUsername());
             tvCreatedAt.setText(getRelativeTimeAgo(post.getCreatedAt().toString()));
             ParseFile image = post.getImage();
