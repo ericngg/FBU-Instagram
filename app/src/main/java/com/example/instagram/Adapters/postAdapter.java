@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.instagram.Activities.MainActivity;
 import com.example.instagram.Activities.PostDetailActivity;
 import com.example.instagram.Models.Post;
@@ -120,6 +121,12 @@ public class postAdapter extends RecyclerView.Adapter<postAdapter.ViewHolder> {
             tvDescription.setText(Html.fromHtml(desc));
             tvName.setText(post.getUser().getUsername());
             tvCreatedAt.setText(getRelativeTimeAgo(post.getCreatedAt().toString()));
+
+            ParseFile pf = post.getProfilePicture();
+            if (pf != null) {
+                Glide.with(context).load(pf.getUrl()).apply(RequestOptions.circleCropTransform()).into(ivImage);
+            }
+
             ParseFile image = post.getImage();
             if (image != null) {
                 Glide.with(context).load(image.getUrl()).into(ivImage);

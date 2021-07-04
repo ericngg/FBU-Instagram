@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.instagram.Models.Comment;
 import com.example.instagram.Models.Post;
 import com.example.instagram.Adapters.commentAdapter;
@@ -65,8 +66,9 @@ public class PostDetailActivity extends AppCompatActivity {
         objectId = post.getObjectId();
 
         // Profile picture
-        ParseFile image = post.getUser().getParseFile("profilePicture");
-        Glide.with(this).load(image.getUrl()).into(binding.ivDetailProfile);
+        ParseFile image = post.getProfilePicture();
+        Glide.with(this).load(image.getUrl()).apply(RequestOptions.circleCropTransform()).into(binding.ivDetailProfile);
+
 
         // Post picture
         Glide.with(this).load(post.getImage().getUrl()).into(binding.ivDetailPicture);

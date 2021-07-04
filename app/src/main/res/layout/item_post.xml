@@ -65,6 +65,7 @@
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
         app:srcCompat="@mipmap/pfp_round" />
+    
 
     <ImageView
         android:id="@+id/imageView2"

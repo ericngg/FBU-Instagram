@@ -13,9 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.instagram.Models.Comment;
+import com.example.instagram.ParseApplication;
 import com.example.instagram.R;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -69,17 +72,10 @@ public class commentAdapter extends RecyclerView.Adapter<commentAdapter.ViewHold
         }
 
         public void bind(Comment comment) {
-            // Note: add this if multiple users. I hardcoded the source picture because it is round
-            // and if you use this code, it grabs a square one from the database. Atm, it is designed
-            // for just me (Eric).
-
-            /*
-            ParseFile image = comment.getUser().getParseFile("profilePicture");
+            ParseFile image = ParseUser.getCurrentUser().getParseFile("profilePicture");
             if (image != null) {
-                Glide.with(context).load(image.getUrl()).into(ivCommentPicture);
+                Glide.with(context).load(image.getUrl()).apply(RequestOptions.circleCropTransform()).into(ivCommentPicture);
             }
-
-             */
 
             // Populating comment data
             String text = "<b>" + comment.getUser().getUsername() + "</b> " + comment.getComment();

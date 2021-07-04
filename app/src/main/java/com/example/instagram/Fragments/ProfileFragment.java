@@ -12,12 +12,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.instagram.Activities.MainActivity;
 import com.example.instagram.Models.Post;
 import com.example.instagram.databinding.FragmentProfileBinding;
 import com.example.instagram.Adapters.postGridAdapter;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -58,6 +61,11 @@ public class ProfileFragment extends Fragment {
         binding.rvGridPosts.setAdapter(adapter);
         binding.rvGridPosts.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
+        ParseFile image = ParseUser.getCurrentUser().getParseFile("profilePicture");
+        if (image != null) {
+            Glide.with(this).load(image.getUrl()).apply(RequestOptions.circleCropTransform()).into(binding.ivProfilePicture);
+        }
+
         // Only signs out!
         binding.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +84,7 @@ public class ProfileFragment extends Fragment {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
         query.addDescendingOrder(Post.KEY_CREATED_AT);
+        query.whereEqualTo("user", ParseUser.getCurrentUser());
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {
