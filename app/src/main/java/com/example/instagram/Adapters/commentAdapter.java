@@ -72,7 +72,7 @@ public class commentAdapter extends RecyclerView.Adapter<commentAdapter.ViewHold
         }
 
         public void bind(Comment comment) {
-            ParseFile image = ParseUser.getCurrentUser().getParseFile("profilePicture");
+            ParseFile image = comment.getUser().getParseFile("profilePicture");
             if (image != null) {
                 Glide.with(context).load(image.getUrl()).apply(RequestOptions.circleCropTransform()).into(ivCommentPicture);
             }
