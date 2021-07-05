@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,6 +33,13 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         super.onCreate(savedInstanceState);
         setContentView(view);
+
+        //getSupportActionBar().setDisplayShowHomeEnabled(false);
+        //getSupportActionBar().setLogo(R.mipmap.logo_foreground);
+        //getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setTitle(Html.fromHtml("<font color=\"black\">" + "Instagram" + "</font>"));
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#FFFFFFFF"));
+        getSupportActionBar().setBackgroundDrawable(colorDrawable);
 
         // Fragments
         fragmentManager = getSupportFragmentManager();

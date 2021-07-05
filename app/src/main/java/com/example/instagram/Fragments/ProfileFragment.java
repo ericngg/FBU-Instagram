@@ -1,5 +1,6 @@
 package com.example.instagram.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.instagram.Activities.FActivity;
 import com.example.instagram.Activities.MainActivity;
 import com.example.instagram.Models.Post;
 import com.example.instagram.databinding.FragmentProfileBinding;
@@ -36,6 +38,7 @@ public class ProfileFragment extends Fragment {
 
     protected postGridAdapter adapter;
     protected List<Post> allPosts;
+    private MainActivity mainActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,7 +54,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        mainActivity = (MainActivity) getActivity();
         init(); // Needed for some reason or all the code gets called
     }
 
@@ -72,6 +75,24 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 ParseUser.logOut();
                 getActivity().finish();
+            }
+        });
+
+        binding.tvProfileFollowers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), FActivity.class);
+                intent.putExtra("code", "Followers");
+                startActivity(intent);
+            }
+        });
+
+        binding.tvProfileFollowing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), FActivity.class);
+                intent.putExtra("code", "Following");
+                startActivity(intent);
             }
         });
 
