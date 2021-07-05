@@ -35,7 +35,6 @@ The following **stretch** features are implemented:
 
 **Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):**
 
-1. The current version only supports the admin (ME). I hardcoded some of the imageviews so they could be circular. Changing it the make it more flexible for all users.
 2. Post feed is also specific only to the admin (ME).
 3. Add better cropping feature for the news feed photo.
 4. Add more features to the profile
